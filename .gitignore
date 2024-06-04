@@ -1,5 +1,5 @@
 DB_USERNAME =pedrorsouza212
-DB_PASSWORD =
+DB_PASSWORD = olhar em outro local
 DB_HOST=clusterprova.kf2ea5z.mongodb.net
 DB_NAME =apiLivrariaProva
 
