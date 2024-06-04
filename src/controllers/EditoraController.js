@@ -7,7 +7,12 @@ async function create(req, res) {
 }
 
 async function getAll(req, res) {
-    res.json(await editora.find().populate(['autor', 'livro']))
+    try {
+        const editoras = await Editora.find().populate(['autor', 'livro']);
+        res.json(editoras);
+    } catch (error) {
+        res.status(500).json({ mensagem: "Erro ao buscar editoras", error });
+    }
 }
 
 async function getById(req, res) {
@@ -21,7 +26,7 @@ async function getById(req, res) {
 
 async function update(req, res) {
     const editoraAtulizado = await Editora.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    if (editoraAtulizadoo) {
+    if (editoraAtulizado) {
         res.json(editoraAtulizado)
     } else {
         res.status(404).json({ mensagem: "Editora não encontrato!" })

@@ -2,10 +2,6 @@ const mongoose = require('mongoose')
 
 const schema = new mongoose.Schema(
     {
-        id: {
-            type: String,
-            required: true
-        },
         nome: {
             type: String,
             required: true
@@ -15,13 +11,11 @@ const schema = new mongoose.Schema(
             required: true
         },
         autor: {
-            type: mongoose.SchemaTypes.ObjectId,
-            ref: 'autor',
+            type: String,
             required: false
         },
         editora: {
-            type: mongoose.SchemaTypes.ObjectId,
-            ref: 'editora',
+            type: String,
             required: false
         },
         

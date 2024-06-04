@@ -40,13 +40,11 @@ const schema = new mongoose.Schema(
             complemento: String
         },
         cargo: {
-            type: mongoose.SchemaTypes.ObjectId,
-            ref: 'cargo',
+            type: String,
             required: false
         },
         departamento: {
-            type: mongoose.SchemaTypes.ObjectId,
-            ref: 'departamento',
+            type: String,
             required: false
         },
     },

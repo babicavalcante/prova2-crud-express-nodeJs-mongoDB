@@ -2,16 +2,19 @@ const yup = require('yup')
 
 const schema = yup.object().shape({
     id: yup
+        .number('Preencha somente com números')
         .required('campo obrigatório'),
     nome: yup
         .string('campo precisa ser um texto')
         .required('campo obrigatório'),
     cnpj: yup
+        .string('campo precisa ser um texto')
         .required('campo obrigatório'),
     autor: yup
         .string('campo precisa ser um texto')
         .required('campo obrigatório'),
     livro: yup
+        .string('campo precisa ser um texto')
         .required('campo obrigatório')
 })
 
