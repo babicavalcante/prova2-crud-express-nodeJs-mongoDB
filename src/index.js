@@ -3,6 +3,7 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const checkToken = require('./auth')
+const puppeteer = require('puppeteer')
 
 const app = express()
 const PORT = 3000
@@ -39,6 +40,7 @@ app.get("/user/:id", checkToken, async (req, res) => {
     res.status(200).json({ user })
 
 })
+
 
 /* ------------------------------------------------------------------------------------------------------------------------ */
 
@@ -145,4 +147,54 @@ app.post("/auth/login", async (req, res) => {
     }
 })
 
+/* ----------------------------------------------------------------------------------------------------------------------- */
+// Rota para gerar PDF
+app.post('/generate-user-pdf/:id', checkToken, async (req, res) => {
+    const { id } = req.params; // ID do usuário a ser recuperado
 
+    // Verificando se o usuário existe
+    const user = await User.findById(id, '-senha');
+
+    if (!user) {
+        return res.status(404).json({ msg: 'Usuário não encontrado!' });
+    }
+
+    try {
+        // Conteúdo HTML com os dados do usuário
+        const content = `
+            <h1>Informações do Usuário</h1>
+            <p><strong>Nome:</strong> ${user.nome}</p>
+            <p><strong>Email:</strong> ${user.email}</p>
+        `;
+
+        // Lançar uma nova instância do Chromium com opções adicionais
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            headless: true,
+        });
+        const page = await browser.newPage();
+
+        // Configurar o tempo de espera
+        await page.setContent(content, { waitUntil: 'networkidle0', timeout: 60000 });
+
+        // Gerar o PDF
+        const pdfBuffer = await page.pdf({ format: 'A4' });
+
+        await browser.close();
+
+        // Configurar o cabeçalho da resposta para download do PDF
+        res.set({
+            'Content-Type': 'application/pdf',
+            'Content-Length': pdfBuffer.length,
+            'Content-Disposition': 'attachment; filename=usuario_${user.nome}.pdf',
+        });
+
+        res.send(pdfBuffer);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            msg: 'Aconteceu um erro ao gerar o PDF, tente novamente mais tarde!'
+        });
+    }
+});
