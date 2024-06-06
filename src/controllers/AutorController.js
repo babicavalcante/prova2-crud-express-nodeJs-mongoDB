@@ -1,5 +1,6 @@
 const Autor = require('../models/Autor')
 
+
 async function create(req, res) {
     const autor = new Autor(req.body)
     const autorCriado = await autor.save()

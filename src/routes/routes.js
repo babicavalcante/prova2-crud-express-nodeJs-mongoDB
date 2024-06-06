@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const checkToken = require('../auth')
 
 // controllers
 const AutorController = require('../controllers/AutorController')
@@ -17,39 +18,39 @@ const { funcionarioValidador } = require('../validators/FuncionarioValidator')
 const { livroValidador } = require('../validators/LivroValidator')
 
 // Autor
-router.post('/autores', autorValidador, AutorController.create)
-router.get('/autores', AutorController.getAll)
-router.get('/autores/:id', validarId, AutorController.getById)
-router.put('/autores/:id', validarId, autorValidador, AutorController.update)
-router.delete('/autores/:id', validarId, AutorController.remove)
+router.post('/autores', autorValidador, checkToken, AutorController.create)
+router.get('/autores', checkToken, AutorController.getAll)
+router.get('/autores/:id', validarId, checkToken, AutorController.getById)
+router.put('/autores/:id', validarId, autorValidador, checkToken, AutorController.update)
+router.delete('/autores/:id', validarId, checkToken, AutorController.remove)
 
 // Cliente
-router.post('/clientes', clienteValidador, ClienteController.create)
-router.get('/clientes', ClienteController.getAll)
-router.get('/clientes/:id', validarId, ClienteController.getById)
-router.put('/clientes/:id', validarId, clienteValidador, ClienteController.update)
-router.delete('/clientes/:id', validarId, ClienteController.remove)
+router.post('/clientes', clienteValidador, checkToken, ClienteController.create)
+router.get('/clientes', checkToken, ClienteController.getAll)
+router.get('/clientes/:id', validarId, checkToken, ClienteController.getById)
+router.put('/clientes/:id', validarId, clienteValidador, checkToken, ClienteController.update)
+router.delete('/clientes/:id', validarId, checkToken, ClienteController.remove)
 
 // Editora
-router.post('/editoras', editoraValidador, EditoraController.create)
-router.get('/editoras', EditoraController.getAll)
-router.get('/editoras/:id', validarId, EditoraController.getById)
-router.put('/editoras/:id', validarId, editoraValidador, EditoraController.update)
-router.delete('/editoras/:id', validarId, EditoraController.remove)
+router.post('/editoras', editoraValidador, checkToken, EditoraController.create)
+router.get('/editoras', checkToken, EditoraController.getAll)
+router.get('/editoras/:id', validarId, checkToken, EditoraController.getById)
+router.put('/editoras/:id', validarId, editoraValidador, checkToken, EditoraController.update)
+router.delete('/editoras/:id', validarId, checkToken, EditoraController.remove)
 
 // Funcionarios
-router.post('/funcionarios', funcionarioValidador, FuncionarioController.create)
-router.get('/funcionarios', FuncionarioController.getAll)
-router.get('/funcionarios/:id', validarId, FuncionarioController.getById)
-router.put('/funcionarios/:id', validarId, funcionarioValidador, FuncionarioController.update)
-router.delete('/funcionarios/:id', validarId, FuncionarioController.remove)
+router.post('/funcionarios', funcionarioValidador, checkToken, FuncionarioController.create)
+router.get('/funcionarios', checkToken, FuncionarioController.getAll)
+router.get('/funcionarios/:id', validarId, checkToken, FuncionarioController.getById)
+router.put('/funcionarios/:id', validarId, funcionarioValidador, checkToken, FuncionarioController.update)
+router.delete('/funcionarios/:id', validarId, checkToken, FuncionarioController.remove)
 
 // Livro
-router.post('/livros', livroValidador, LivroController.create)
-router.get('/livros', LivroController.getAll)
-router.get('/livros/:id', validarId, LivroController.getById)
-router.put('/livros/:id', validarId, livroValidador, LivroController.update)
-router.delete('/livros/:id', validarId, LivroController.remove)
+router.post('/livros', livroValidador, checkToken, LivroController.create)
+router.get('/livros', checkToken, LivroController.getAll)
+router.get('/livros/:id', validarId, checkToken, LivroController.getById)
+router.put('/livros/:id', validarId, livroValidador, checkToken, LivroController.update)
+router.delete('/livros/:id', validarId, checkToken, LivroController.remove)
 
 
 module.exports = router
